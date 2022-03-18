@@ -1,4 +1,4 @@
-#Canvas Enrollment Automation
+# Canvas Enrollment Automation
 
 St Mark's current configuration for this automation is as follows:
 
@@ -14,9 +14,9 @@ St Mark's current configuration for this automation is as follows:
   - Email group with SIS Status
   - Enter date and Completed status into database to log successful run.  This date will be used the next day by the query.
 
-##Query
+## Query
 
-###Add/Drop
+### Add/Drop
 
 This query will return all the changes within a given range (at St Marks we are using a table to store the last run date of this job).  The key thing to note is that  Blackbaud has 3 different change types that behave a bit different
 
@@ -28,20 +28,20 @@ And `ChangeType = 4` means transferred (student has switched sections).  Change 
 
 Hence there are 3 total queries unioned together.  The query is configured to spit out the values in Canvas CSV format.
 
-##SIS Script
+## SIS Script
 
 This is a VB.Net Script that will decrypt stored values, grab the csv file created by the SQL query, call the Canvas SIS API and upload the file. This script returns an SIS job ID
 Once the file is uploaded.  I have a job that waits 5 minutes before checking the status of this SIS Job ID
 
-##Check Status Script
+## Check Status Script
 
 This is a VB.Net Script that will decrypt stored values on the server.  This script required the SISJobId obtained from the SIS Script.  It will the Canvas check SIS Status API, and will return a string of the status of completed or with the specific errors of why the job failed.
 
-##Email Script
+## Email Script
 
 This is a VB.Net Script that will email the results, of the SIS status to specified users.
 
-##Encryption Script
+## Encryption Script
 
 This is a VB.Net Script that will encrypt locally stored variables-given that the auth token is locally stored, along with the username and password for the email script.  This class is called in each of the scripts above in order to decrypt the variables needed.
 
